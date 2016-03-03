@@ -1,0 +1,478 @@
+<style type="text/css">
+	body {
+		background-color: #000;
+	}	
+</style>
+
+<nav class="navbar navbar-default" style="background-color: #000; height: 40px;border:none">
+<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+		<a class="navbar-brand" style="color: #fff; font-family: 'Open Sans',sans-serif;font-size: 24px;
+			margin-top: 5px;
+    		margin-left: 10px;" href="#">Documentation</a>
+  	</div>
+ </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid" style="background-color:#fff; padding-top:10px;">
+	<div class="container-fluid header">
+  		<div class="pull-left;">
+     		<h1 class="dockmon-title" style="font-size:35px; margin-top: -7px;margin-left: -35px;"><span style="text-decoration:underline;">Dock</span><span 		style="border: 2px solid #22B8EB; padding: 1px 10px; margin-left:2px;">Mon</span></h1>
+    	</div>
+	</div>
+
+
+	<div id="test">
+</div>
+
+<br><br>
+
+<div style="color: #22B8EB; margin-left: 100px">
+	<h2 style="font-weight: 700;
+	font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"> Installation </h2>
+</div>
+
+<div style="color: #000; margin-left: 100px">
+Welcome to the installation guide for DOCKMON version 0.1. DOCKMON is an open source Docker Monitoring system for stand alone as well as Cloud server.<br><br>
+
+DOCKMON automatically detects and monitors every host, container and process in your infrastructure, builds a map and then presents an up-to-date view of your infrastructure in a web interface. You can visualize, monitor and control your distributed applications and troubleshoot bottlenecks, memory leaks or any other issues. It does this without requiring changes to your code or configuration, and without having to make declarations about your infrastructure that become out-of-date and stale.<br>
+
+DockMon can be deployed to any infrastructure, and works well in all cloud and bare-metal environments.<br><br>
+
+
+We recommend you install DOCKMON version 0.1. on a dedicated Ubuntu 15.04 64-bit server/RHEL 7 that is not running any other web applications. This will avoid subtle conflicts (such as with underlying configuration files) that will cause errors in DOCKMON installation and running.<br></div>
+
+
+<div style="margin-left: 100px">
+
+<h3 style="color: #22B8EB; font-weight: 700;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;">
+ 	Before Installation<br></h3>
+ 		The prerequisites for DOCKMON 0.1 are<br>
+ 		<ul>
+ 		<li> A linux based stand alone Machine or Server, preferable Ubuntu/Debian Wheezy or CentOS 7/RHEL7</li>
+ 		<li> 4 GB of memory with swap enabled (8 GB is better)</li>
+ 		<li> TCP ports 80, 3000, 443(ssl) are accessible</li>
+ 		<li> Disable IPtables/Enable FirewallD and apply the above mentioned rules</li>
+ 		<li> Port 80 is not in use by another application or web server</li>
+ 		<li> 256 GB of free disk space for container storage</li>
+ 		<li> Good Bandwidth Internet Speed</li>
+ 		</ul>
+ <h4 style="color: #22B8EB; font-weight: 700;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;">
+ 	1. Installation on stand alone/Physical System<br></h4>
+ 			<ul type="square">
+ 				<li><a id="smooth" href="#">DOCKMON Installation on Centos7/RHEL7</a><br></li> 
+ 				<li><a id="smooth2" href="#">DOCKMON Installation on Ubuntu 15.04/Debian 8</a><br></li>
+ 			</ul>
+  <h4 style="color: #22B8EB; font-weight: 700;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;">            
+    2.  Installation on Cloud Server (AWS/OpenStack)<br></h4><br>
+
+<div id="scroll">
+ <h4 style="color: #22B8EB; font-weight: 700;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;">		
+ DOCKMON Installation on CentOS7/RHEL7<br></h4>
+</div>
+    	<ul>
+ 		   <li> Update your Server/Machine</li>
+ 		   <li> Add a user dockmon and Give Sudo Privileges</li>
+ 		   <li> Install Docker Engine 1.10.1</li>
+ 		   <li> Install Ruby 2.3.x and set the ENV Variable</li>
+ 		   <li> Install Bundler and Integrate Rails 4.2.x with Ruby2.3.x</li>
+ 		   <li> Install Phusion Passenger 5.0.23 Gem. (Application Server)</li>
+ 		   <li> Install Nginx 1.9.9 and Integrate with the Phusion Passenger</li>
+ 		   <li> Install Git-core,nodejs and sqlite devel</li>
+ 		   <li> Install DOCKMON 0.1 and run the Configuration script</li>
+ 		   <li> Configure the Nginx Configuration File</li>
+ 		   <li> Restart the Services</li>
+        </ul><br>
+<div style="background: #2980b9; color: #fff; border-color: #20638f;">
+	Note:<br>
+	The text with the Blue font inside the grey box is considered as Command which is supposed to be run on th terminal and the rest of the text will be considered as content of the respective file
+<br><br>
+
+
+</div>
+
+
+ <h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>Update your Server/Machine</i></h4><br>
+			The Server must be able to access all the dependencies and required packages, that's why we need to configure the repo file and update the server.<br>
+
+			The below Configuration file is of CentOS7 and the necessary changes should be done by uncomment the "baseurl" and put "enabled=1" in every directive<br><br>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;">
+
+<pre>
+
+<div style="color: blue;">#vi /etc/yum.repos.d/CentOS-Base.repo</div><br><br>
+
+# CentOS-Base.repo
+#
+# The mirror system uses the connecting IP address of the client and the
+# update status of each mirror to pick mirrors that are updated to and
+# geographically close to the client.  You should use this for CentOS updates
+# unless you are manually picking other mirrors.
+#
+# If the mirrorlist= does not work for you, as a fall back you can try the 
+# remarked out baseurl= line instead.
+#
+#
+
+[base]
+name=CentOS-$releasever - Base
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
+baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+enabled=1
+#released updates 
+[updates]
+name=CentOS-$releasever - Updates
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
+baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+enabled=1
+#additional packages that may be useful
+[extras]
+name=CentOS-$releasever - Extras
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras
+baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+enabled=1
+#additional packages that extend functionality of existing packages
+[centosplus]
+name=CentOS-$releasever - Plus
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus
+baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+#contrib - packages by Centos Users
+[contrib]
+name=CentOS-$releasever - Contrib
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=contrib
+baseurl=http://mirror.centos.org/centos/$releasever/contrib/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+							
+:wq! (save & quit)<br><br>
+<div style="color: blue;">
+#yum clean all<br>
+#yum repolist all<br>
+#yum update -y</div>
+</pre>
+</div>
+
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Add a user dockmon and Give Sudo Privileges</i></h4><br>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;">
+<pre>
+<div style="color: blue;">$ sudo useradd dockmon</div>
+</pre>
+</div>
+Probably it prompts for password, then enter the correct password<br>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;">
+<pre>
+<div style="color: blue;">$ sudo visudo</div>
+</pre>
+</div>						
+
+It will open the editor, then go at the last and add the given below line<br>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;">
+<pre>
+dockmon    ALL=(ALL)      NOPASSWD:ALL<br>
+
+<div style="color: blue;">:wq! (save & quit)</div>
+</pre>
+</div>
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Install Docker Engine 1.10.x</i></h4><br>
+
+	This installation procedure is written for users who are unfamiliar with package managers. If you are comfortable with package managers, prefer not to use curl, or have problems installing and want to troubleshoot<br><br>
+
+	Switch to dockmon user<br>
+	<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;">
+<pre>
+<div style="color: blue;">
+$sudo su dockmon
+$sudo yum install curl -y
+$curl -fsSL https://get.docker.com/ | sh
+</div>
+</pre>
+</div>
+		The system prompts you for your sudo password. Then, it downloads and installs Docker and its dependencies	
+	<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;">
+<pre>
+<div style="color: blue;">
+$sudo usermod -aG docker dockmon
+$sudo systemctl enable docker
+$sudo systemctl start docker
+</div>
+</pre>
+</div>
+Verify docker is installed correctly.
+	<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;">
+<pre>
+<div style="color: blue;">
+$ docker run hello-world</div>
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+535020c3e8ad: Pull complete
+af340544ed62: Pull complete
+Digest: sha256:a68868bfe696c00866942e8f5ca39e3e31b79c1e50feaee4ce5e28df2f051d5c
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker.
+This message shows that your installation appears to be working correctly.
+To generate this message, Docker took the following steps:
+1. The Docker Engine CLI client contacted the Docker Engine daemon.
+2. The Docker Engine daemon pulled the "hello-world" image from the Docker Hub.
+3. The Docker Engine daemon created a new container from that image which runs the
+executable that produces the output you are currently reading.
+4. The Docker Engine daemon streamed that output to the Docker Engine CLI client, which sent it to your terminal.
+</pre>
+</div>
+To try something more ambitious, you can run an Ubuntu container with:
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$ docker run -it ubuntu bash
+</div>
+</pre>
+</div>
+
+For more examples and ideas, visit:  <a href="https://docs.docker.com/userguide/"><u>https://docs.docker.com/userguide/</u></a><br><br>
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Install Ruby 2.3.x via Tarball</i></h4>
+
+	There is always the option to use yum to install ruby packages but the versions in repositories will be older, not the latest stable. This guide is using a Centos 7.x base system without any packages installed and all commands run as root or sudo privilages.<br><br>
+
+	First the system will need the appropriate packages to compile and install the source code for ruby. To do this run the following command.
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$ sudo yum -y install make gcc openssl-devel zlib-devel gcc gcc-c++ make autoconf readline-devel curl-devel expat-devel gettext-devel ncurses-devel sqlite3-devel mysql-devel httpd-devel wget which
+</div>
+</pre>
+</div>
+	 Download the ruby tarball by doing below operation
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$cd
+$wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+$tar xzf ruby-2.3.0.tar.gz
+$cd ruby-2.3.0
+$./configure
+$sudo make
+$sudo make install
+$sudo vi /etc/bashrc
+</div>
+</pre>
+</div>
+
+
+Go at the end of line and append the following content
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre>
+export PATH=$PATH:/usr/local/bin
+<div style="color: blue;">
+:wq!(save & quit)
+$source /etc/bashrc
+</div>
+</pre>
+</div>
+append /usr/local/bin in Default secure path
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$sudo visudo</div>				
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin"
+<div style="color: blue;">
+:wq!(save & quit)
+</div>
+</pre>
+</div>
+						
+The install process will probably take a while, but once it's done, we can test to see if ruby installed successfully by typing <i>"ruby -v"</i> in the terminal. You should see something like, <i>"ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-linux]"</i> if ruby installed correctly<br><br>
+
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Install Bundler and Integrate Rails 4.2.x with Ruby2.3.x</i></h4>
+Next we can install the Bundler and Rails gems
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$ sudo gem install bundler
+$ sudo gem install rails -v 4.2.5
+</div>
+</pre>
+</div>
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+ Install Phusion Passenger 5.0.23 Gem. (Application Server)</i></h4>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$ sudo gem install passenger -v 5.0.23
+</div>
+</pre>
+</div>
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Install Nginx 1.9.9 and Integrate with the Phusion Passenger</i></h4>
+So we've installed ruby as described above. But we are nothing with only a ruby installation. To serve our ruby / rails apps, we'll need a webserver. Until last year, Ops always used Apache to do the heavy lifting. But after some research, I decided to make the switch to Nginx. Either way, I'll be using Nginx in combination with Passenger.<br><br>
+Ok, first of all, you need to know that Nginx can't load modules dynamically like Apache does. This means that you need to compile Nginx with all the options that you need before you can use them. So if you compile Nginx and need to activate a new module, you'll need to recompile Nginx.<br><br>
+First start with installing a few essential tools for Nginx. In order to use the http rewrite-module, we need the PCRE library:
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$ sudo yum install pcre* -y
+</div>
+</pre>
+</div>
+Before we install the passenger gem and start the installation process, we need to get the nginx source
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$wget http://nginx.org/download/nginx-1.9.9.tar.gz
+$tar xzf nginx-1.9.9.tar.gz
+</div>
+</pre>
+</div>
+Now that all preparations are in place, we are ready to start the installation procedure:
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$sudo passenger-install-nginx-module
+</div>
+</pre>
+</div>
+The first screen you see contains some information, so press enter to continue. The installer will start to check if all required software is available. So install it if the installer tells you, you miss something.<br>
+After the check you get the 2 options: the first is an auto install. Since we are going to customize our installation, you'll need option 2.<br>
+
+Next step you'll be asked to specify the source directory where you untarred the nginx source code:<br>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre>
+Please specify the directory: /home/dockmon/nginx-1.9.9
+Now you'll be asked to specify the installation directory:
+Please specify a prefix directory [/opt/nginx]:
+</pre>
+</div>
+
+Adding nginx to services
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$vim /lib/systemd/system/nginx.service
+</pre>
+</div>
+add the following content
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre>
+[Unit]
+Description=The nginx HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/opt/nginx/logs/nginx.pid
+ExecStartPre=/opt/nginx/sbin/nginx -t
+ExecStart=/opt/nginx/sbin/nginx
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+
+wq!
+save and quit
+</pre>
+</div>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$sudo chmod +x /lib/systemd/system/nginx.service
+$sudo systemctl enable nginx
+$sudo systemctl start nginx
+</div>
+</pre>
+</div>
+Can verify through
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$sudo netstat -antpul | grep nginx
+</div>
+</pre>
+</div>
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Install Git-core,nodejs and sqlite devel</i></h4>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$sudo yum install git* -y
+$ cd ~
+$ wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
+$ sudo tar --strip-components 1 -xzvf node-v* -C /usr/local
+$ node --version
+$ sudo yum install sqlite-devel -y
+</div>
+</pre>
+</div>
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Install DOCKMON 0.1 and run the Configuration script</i></h4>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$sudo wget https://github.com/nikitswaraj12345/Docker_Monitoring/archive/master.zip
+$sudo yum install unzip -y
+$unzip master.zip
+$sudo mv Docker_Monitoring_master Docker_Monitoring
+$sudo mkdir /srv/dockmon_app
+$cp -rvpf Docker_Monitoring /srv/dockmon_app
+$cd /srv/dockmon_app/Docker_Monitoring/DOCKMON
+$bundle install
+$rake assets:precompile RAILS_ENV=production
+$touch tmp/restart.txt
+</div>
+</pre>
+</div>
+<h4 style="color: #22B8EB; font-weight: 500;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;"><i>
+Configure the Nginx Configuration File</i></h4>
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre><div style="color: blue;">
+$sudo mkdir /opt/nginx/conf/server
+$cd /opt/nginx/conf/server
+$sudo vi dockmon.conf
+</div>
+server {
+listen 80;
+server_name localhost;
+root /srv/dockmon_app/Docker_Monitoring/DOCKMON/public;
+passenger_enabled on;
+}
+
+:wq!
+(save & quit)
+<div style="color: blue;">
+$sudo vi /opt/nginx/conf/nginx.conf
+</div>
+</pre>
+</div>
+comment the first server directive of the http directive and add the given line just above the last parenthesis "}"
+<div class="command_linux" style="background-color: #f8f8f8; border: 1px solid #ffcb94; margin-bottom: 1.5rem;"><pre>
+include /opt/nginx/conf/server/*.conf;
+:wq!
+(save & quit)
+<div style="color: blue;">
+$sudo systemctl restart nginx
+</div>
+</pre>
+</div>
+
+	Open your favourite browser and hit the IP or domain which you had provided in the dockmon.conf file.<br><br>
+
+<div id="scroll2">
+ <h4 style="color: #22B8EB; font-weight: 700;font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;">		
+ DOCKMON Installation on Ubuntu 15.04/Debian 8 <br></h4>
+</div>
+    	<ul>
+ 		   <li> Update your Server/Machine</li>
+ 		   <li> Add a user dockmon and Give Sudo Privileges</li>
+ 		   <li> Install Docker Engine 1.10.1</li>
+ 		   <li> Install Ruby 2.3.x and set the ENV Variable</li>
+ 		   <li> Install Bundler and Integrate Rails 4.2.x with Ruby2.3.x</li>
+ 		   <li> Install Phusion Passenger 5.0.23 Gem. (Application Server)</li>
+ 		   <li> Install Nginx 1.9.9 and Integrate with the Phusion Passenger</li>
+ 		   <li> Install Git-core,nodejs and sqlite devel</li>
+ 		   <li> Install DOCKMON 0.1 and run the Configuration script</li>
+ 		   <li> Configure the Nginx Configuration File</li>
+ 		   <li> Restart the Services</li>
+        </ul><br>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$("#smooth").click(function() { $('html, body').animate({ scrollTop: $("#scroll").offset().top }, 500); });
+
+	$("#smooth2").click(function() { $('html, body').animate({ scrollTop: $("#scroll2").offset().top }, 500); });
+
+</script>

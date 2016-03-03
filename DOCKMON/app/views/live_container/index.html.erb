@@ -1,0 +1,29 @@
+
+
+  <div class="container-fluid header">
+    <div class="pull-left">
+     <h1 class="dockmon-title" style="font-size:48px;"><span style="text-decoration:underline;">Dock</span><span style="border: 2px solid #22B8EB; padding: 1px 10px; margin-left:2px;">Mon</span></h1>
+    </div>
+    <div class="pull-right about-devop">
+      <a href="/live_container/documentation" style="color:#22B8EB">Documentation</a> |
+      <a href="" style="color:#22B8EB">About</a>
+    </div>
+  </div>
+  <div class="container-fluid welcome-page">
+    <h1 class="docker-monitoring" style="text-align:center;"><B>Monitoring System</B></h1>
+    <br><br>
+    <%= link_to("Start Monitoring",{:controller => 'live_container', :action => 'read_container_file'}, :class => "start-monitoring") %>
+  </div>
+  
+
+<style type="text/css">
+  
+  
+ body {
+    background-image: url(<%= asset_path 'docker-facebook.png'%>);
+    background-size: cover;
+    background-repeat: no-repeat;
+      }
+
+  
+</style>

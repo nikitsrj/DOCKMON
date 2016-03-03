@@ -1,0 +1,8 @@
+#!/bin/bash
+while true;
+do 
+	live_container.sh > live_container_file.txt ;
+
+	sleep 2;
+done
+	

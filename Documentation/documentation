@@ -1,0 +1,353 @@
+************************************************Documentation Of DockMon**********************************************
+ 
+
+ 	* Install 
+
+
+
+
+
+
+Welcome to the installation guide for DOCKMON version 0.1. DOCKMON is an open source Docker Monitoring system for standalone as well as Cloud server.
+
+DOCKMON automatically detects and monitors every host, container and process in your infrastructure, builds a map and then presents an up-to-date view of your infrastructure in a web interface. You can visualize, monitor and control your distributed applications and troubleshoot bottlenecks, memory leaks or any other issues. It does this without requiring changes to your code or configuration, and without having to make declarations about your infrastructure that become out-of-date and stale.
+
+DockMon can be deployed to any infrastructure, and works well in all cloud and bare-metal environments.
+
+
+We recommend you install DOCKMON version 0.1. on a dedicated Ubuntu 15.04 64-bit server/RHEL 7 that is not running any other web applications. This will avoid subtle conflicts (such as with underlying configuration files) that will cause errors in DOCKMON installation and running.
+
+Technology Used : Docker Engine, AWS EC2, Shell Script, Ruby, Rails, HTML,CSS, Bootstrap, NGINX, Phusion Passenger
+
+
+
+
+
+ 	* Before Installation
+ 		The prerequisites for BigBlueButton 0.9.1 server are
+ 			. A linux based stand alone Machine or Server, preferable Ubuntu/Debian Wheezy or CentOS 7/RHEL7
+ 			. 4 GB of memory with swap enabled (8 GB is better)
+ 			. TCP ports 80, 3000, 443(ssl) are accessible
+ 			. Disable IPtables/Enable FirewallD and apply the above mentioned rules
+ 			. Port 80 is not in use by another application or web server
+ 			. 256 GB of free disk space for container storage
+ 			. Good Bandwidth Internet Speed
+
+ 	*Installation
+ 		* Installation on Stand alone/Physical System
+
+ 		    . Update your Server/Machine
+ 		    . Add a user dockmon and Give Sudo Privileges
+ 		    . Install Docker Engine 1.10.1
+ 		    . Install Ruby 2.3.x and set the ENV Variable
+ 		    . Install Bundler and Integrate Rails 4.2.x with Ruby2.3.x
+ 		    . Install Phusion Passenger 5.0.23 Gem. (Application Server)
+ 		    . Install Nginx 1.9.9 and Integrate with the Phusion Passenger
+ 		    . Install Git-core,nodejs and sqlite devel
+ 		    . Install DOCKMON 0.1 and run the Configuration script
+ 		    . Configure the Nginx Configuration File
+ 		    . Restart the Services
+
+ 		1. DOCKMON Installation on Centos7/RHEL7  
+ 		2. DOCKMON Installation on Debian/Ubuntu 15.04
+
+ 			DOCKMON Installation on CentOS7/RHEL7
+
+ 				* Update your Server/Machine
+
+ 							The Server must be able to access all the dependencies and required packages, that's why we need to configure the repo file and update the server.
+
+ 						The below Configuration file is of CentOS7 and the necessary changes should be done by uncomment the "baseurl" and put "enabled=1" in every directive
+ 						
+ 						#vi /etc/yum.repos.d/CentOS-Base.repo	
+
+							# CentOS-Base.repo
+							#
+							# The mirror system uses the connecting IP address of the client and the
+							# update status of each mirror to pick mirrors that are updated to and
+							# geographically close to the client.  You should use this for CentOS updates
+							# unless you are manually picking other mirrors.
+							#
+							# If the mirrorlist= does not work for you, as a fall back you can try the 
+							# remarked out baseurl= line instead.
+							#
+							#
+
+							[base]
+							name=CentOS-$releasever - Base
+							mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
+							baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+							gpgcheck=1
+							gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+							enabled=1
+							#released updates 
+							[updates]
+							name=CentOS-$releasever - Updates
+							mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
+							baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+							gpgcheck=1
+							gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+							enabled=1
+							#additional packages that may be useful
+							[extras]
+							name=CentOS-$releasever - Extras
+							mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras
+							baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+							gpgcheck=1
+							gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+							enabled=1
+							#additional packages that extend functionality of existing packages
+							[centosplus]
+							name=CentOS-$releasever - Plus
+							mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus
+							baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
+							gpgcheck=1
+							enabled=1
+							gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+							#contrib - packages by Centos Users
+							[contrib]
+							name=CentOS-$releasever - Contrib
+							mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=contrib
+							baseurl=http://mirror.centos.org/centos/$releasever/contrib/$basearch/
+							gpgcheck=1
+							enabled=1
+							gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+
+							:wq! (save & quit)
+
+						#yum clean all
+						#yum repolist all
+						#yum update -y
+
+
+				* Add a user dockmon and Give Sudo Privileges
+
+					$ sudo useradd dockmon  
+						
+							Probably it prompts for password, then enter the correct password
+					$ sudo visudo
+						
+							It will open the editor, then go at the last and add the given below line
+
+						dockmon    ALL=(ALL)      NOPASSWD:ALL
+
+						:wq! (save & quit)
+
+
+				* Install Docker Engine 1.10.x
+
+					This installation procedure is written for users who are unfamiliar with package managers. If you are comfortable with package managers, prefer not to use curl, or have problems installing and want to troubleshoot
+
+					switch to dockmon user
+
+						$sudo su dockmon
+
+						$sudo yum install curl -y
+
+						$curl -fsSL https://get.docker.com/ | sh
+
+					The system prompts you for your sudo password. Then, it downloads and installs Docker and its dependencies	
+
+						$sudo usermod -aG docker dockmon
+
+						$sudo systemctl enable docker
+
+						$sudo systemctl start docker
+
+					Verify docker is installed correctly.
+
+						$ docker run hello-world
+						Unable to find image 'hello-world:latest' locally
+						latest: Pulling from library/hello-world
+						535020c3e8ad: Pull complete
+						af340544ed62: Pull complete
+						Digest: sha256:a68868bfe696c00866942e8f5ca39e3e31b79c1e50feaee4ce5e28df2f051d5c
+						Status: Downloaded newer image for hello-world:latest
+
+						Hello from Docker.
+						This message shows that your installation appears to be working correctly.
+
+						To generate this message, Docker took the following steps:
+						 1. The Docker Engine CLI client contacted the Docker Engine daemon.
+						 2. The Docker Engine daemon pulled the "hello-world" image from the Docker Hub.
+						 3. The Docker Engine daemon created a new container from that image which runs the
+						    executable that produces the output you are currently reading.
+						 4. The Docker Engine daemon streamed that output to the Docker Engine CLI client, which sent it
+						    to your terminal.
+
+						To try something more ambitious, you can run an Ubuntu container with:
+						 $ docker run -it ubuntu bash
+
+						For more examples and ideas, visit:
+						 https://docs.docker.com/userguide/
+
+				* Install Ruby 2.3.x via Tarball
+
+						There is always the option to use yum to install ruby packages but the versions in repositories will be older, not the latest stable. This guide is using a Centos 7.x base system without any packages installed and all commands run as root or sudo privilages.
+
+					 First the system will need the appropriate packages to compile and install the source code for ruby. To do this run the following command.
+
+					 	$ sudo yum -y install make gcc openssl-devel zlib-devel gcc gcc-c++ make autoconf readline-devel curl-devel expat-devel gettext-devel ncurses-devel sqlite3-devel mysql-devel httpd-devel wget which
+
+					 Download the ruby tarball by doing below operation
+
+					 	$cd
+					 	$wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+					 	$tar xzf ruby-2.3.0.tar.gz
+					 	$cd ruby-2.3.0
+					 	$./configure
+					 	$sudo make
+					 	$sudo make install
+					 	$sudo vi /etc/bashrc
+					 			Go at the end of line and the following content
+
+					 		export PATH=$PATH:/usr/local/bin
+
+					 		:wq!(save & quit)
+					 	$source /etc/bashrc
+
+					 		append /usr/local/bin in Default secure path
+
+					 	$sudo visudo
+				
+			Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin"
+
+						:wq!(save & quit)					 		
+						
+						The install process will probably take a while, but once it's done, we can test to see if ruby installed successfully by typing "ruby -v" in the terminal. You should see something like, "ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-linux]" if ruby installed correctly
+
+				* Install Bundler and Integrate Rails 4.2.x with Ruby2.3.x
+					 Next we can install the Bundler and Rails gems
+
+					 	$ sudo gem install bundler
+					 	$ sudo gem install rails -v 4.2.5
+
+				* Install Phusion Passenger 5.0.23 Gem. (Application Server)
+
+						$ sudo gem install passenger -v 5.0.23
+
+				* Install Nginx 1.9.9 and Integrate with the Phusion Passenger
+
+					So we've installed ruby as described above. But we are nothing with only a ruby installation. To serve our ruby / rails apps, we'll need a webserver. Until last year, Ops always used Apache to do the heavy lifting. But after some research, I decided to make the switch to Nginx. Either way, I'll be using Nginx in combination with Passenger.
+
+					Ok, first of all, you need to know that Nginx can't load modules dynamically like Apache does. This means that you need to compile Nginx with all the options that you need before you can use them. So if you compile Nginx and need to activate a new module, you'll need to recompile Nginx.
+
+					First start with installing a few essential tools for Nginx. In order to use the http rewrite-module, we need the PCRE library:
+
+						$ sudo yum install pcre* -y
+					
+					Before we install the passenger gem and start the installation process, we need to get the nginx source
+
+					    $wget http://nginx.org/download/nginx-1.9.9.tar.gz
+					    $tar xzf nginx-1.9.9.tar.gz
+
+
+					Now that all preparations are in place, we are ready to start the installation procedure:
+
+							$sudo passenger-install-nginx-module
+
+					The first screen you see contains some information, so press enter to continue. The installer will start to check if all required software is available. So install it if the installer tells you, you miss something.
+
+					After the check you get the 2 options: the first is an auto install. Since we are going to customize our installation, you'll need option 2.
+
+					Next step you'll be asked to specify the source directory where you untarred the nginx source code:
+
+						Please specify the directory: /home/dockmon/nginx-1.9.9
+
+						Now you'll be asked to specify the installation directory:
+	
+						Please specify a prefix directory [/opt/nginx]: 
+
+					Adding nginx to services  
+
+							vim /lib/systemd/system/nginx.service
+
+							add the following content
+
+							[Unit]
+							Description=The nginx HTTP and reverse proxy server
+							After=syslog.target network.target remote-fs.target nss-lookup.target
+
+							[Service]
+							Type=forking
+							PIDFile=/opt/nginx/logs/nginx.pid
+							ExecStartPre=/opt/nginx/sbin/nginx -t
+							ExecStart=/opt/nginx/sbin/nginx
+							ExecReload=/bin/kill -s HUP $MAINPID
+							ExecStop=/bin/kill -s QUIT $MAINPID
+							PrivateTmp=true
+
+							[Install]
+							WantedBy=multi-user.target
+
+
+							wq!
+
+							save and quit
+
+							$sudo chmod +x /lib/systemd/system/nginx.service
+
+						start the service
+
+							$sudo systemctl enable nginx
+							$sudo systemctl start nginx
+
+						Can verify through 
+
+							$sudo netstat -antpul | grep nginx
+
+				* Install Git-core,nodejs and sqlite devel
+
+						$sudo yum install git* -y
+						$ cd ~
+						$wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
+						$ sudo tar --strip-components 1 -xzvf node-v* -C /usr/local
+						$ node --version
+						$ sudo yum install sqlite-devel -y
+
+				* Install DOCKMON 0.1 and run the Configuration script
+
+						$sudo wget https://github.com/nikitswaraj12345/Docker_Monitoring/archive/master.zip
+						$sudo yum install unzip -y
+						$unzip master.zip
+						$sudo mv Docker_Monitoring_master Docker_Monitoring
+						$sudo mkdir /srv/dockmon_app
+						$cp -rvpf Docker_Monitoring /srv/dockmon_app
+						$cd /srv/dockmon_app/Docker_Monitoring/DOCKMON
+						$bundle install
+						$rake assets:precompile RAILS_ENV=production
+						$touch tmp/restart.txt
+
+				* Configure the Nginx Configuration File
+
+						$sudo mkdir /opt/nginx/conf/server
+						$cd /opt/nginx/conf/server
+						$sudo vi dockmon.conf
+
+									server {
+									listen 80;
+									server_name localhost;
+									root /srv/dockmon_app/Docker_Monitoring/DOCKMON/public;
+									passenger_enabled on;
+									}
+							:wq! 
+							(save & quit)
+						$sudo vi /opt/nginx/conf/nginx.conf
+
+								comment the first server directive of the http directive and add the given line just above the last parenthesis "}"
+
+								include /opt/nginx/conf/server/*.conf;
+
+							:wq!
+							(save & quit)
+
+						$sudo systemctl restart nginx
+
+	Open your favourite browser and hit the IP or domain which you had provided in the dockmon.conf file.
+
+
+
+
+

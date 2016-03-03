@@ -1,0 +1,34 @@
+<div class="container-fluid header">
+    <div class="" Style="text-align:center">
+      <h1 class="dockmon-title" style="font-size:48px;"><span style="text-decoration:underline;">Dock</span><span style="border: 2px solid #22B8EB; padding: 1px 10px; margin-left:2px;">Mon</span></h1>
+    </div>
+</div>
+
+<h2 style="text-align:center; color:white;">Following are the running containers</h2>
+
+
+<div class= "container docker-container">
+	<% @netdetail.each do |nd| %>
+		<div class="col-md-4">
+ 			<!-- <a class="btn btn-alert maincontent animated zoomIn " style="border-radius:100%; margin-top:75px; margin-left:125px;"> -->
+ 			<%= link_to live_container_show_details_path(:Cont_name => nd.Cont_name),:data => {:remote => true, "target" => "#container_modal"}, :class => "btn btn-alert maincontent animated zoomIn" do %><%= nd.Cont_name %><%end%>
+ 		</div>
+	<% end %>
+ </div>
+ <div id="container_modal"></div>
+
+<div>
+<div>
+	
+</div>
+<style type="text/css">
+
+body {
+	/*background-color: grey;*/
+	background-image: url(<%= asset_path 'blue.jpg'%>);*/
+}
+
+.maincontent {
+	border-radius:100%; margin-top:75px; margin-left:125px;
+}
+</style>
