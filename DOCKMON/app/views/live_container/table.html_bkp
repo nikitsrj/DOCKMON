@@ -1,0 +1,75 @@
+<table>
+				<tbody>
+					<tr>
+						<th>Image ID</th>
+						<td><%= @netdetails.ImageID %></td>
+					</tr>
+					<tr>
+						<th>Image NO</th>
+						<td><%= @netdetails.ImageNO %></td>
+					</tr>
+					<tr>
+						<th>State Process ID</th>
+						<td><%= @netdetails.State_Pid %></td>
+					</tr>
+					<tr>
+						<th>Created On</th>
+						<td><%= @netdetails.DATE %></td>
+					</tr>
+					<tr>
+						<th>Container Name</th>
+						<td><%= @netdetails.Cont_name %></td>
+					</tr>		
+					<tr>
+						<th>Process Running</th>
+						<td><%= @netdetails.command %></td>
+					</tr>
+					<tr>
+						<th>Operating System</th>
+						<td><%= @netdetails.os %></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
+					<div class="col-md-6">
+					<table>
+					<tbody>
+					<tr>
+						<th>Container Status</th>
+						<td><%= @netdetails.Status %></td>
+					</tr>
+					<tr>
+						<th>Memory</th>
+						<td><%= @netdetails.Memory %></td>
+					</tr>
+					<tr>
+						<th>Swap Memory</th>
+						<td><%= @netdetails.Swap_mem %></td>
+					</tr>
+					<tr>
+						<th>Kernel Memory</th>
+						<td><%= @netdetails.Kernel_mem %></td>
+					</tr>
+					<tr>
+						<th>CPU Cores</th>
+						<td><%= @netdetails.CPU_core %></td>
+					</tr>
+					<tr>
+						<th>CPU Qoutas</th>
+						<td><%= @netdetails.CPU_Qouta %></td>
+					</tr>
+					<tr>
+						<th>IPv4</th>
+						<td><%= @netdetails.IPv4 %></td>
+					</tr>
+					<tr>
+						<th>Gateway</th>
+						<td><%= @netdetails.Gateway %></td>
+					</tr>
+					<tr>
+						<th>Mac Address</th>
+						<td><%= @netdetails.MacADD %></td>
+					</tr>
+
+				</tbody>
+				</table>

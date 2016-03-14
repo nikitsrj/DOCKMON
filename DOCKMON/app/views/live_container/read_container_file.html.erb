@@ -6,7 +6,9 @@
 
 <h2 style="text-align:center; color:white;">Following are the running containers</h2>
 
-
+<h5 style="font-family: Arial; color: #fff;text-align:center"><i> Host Machnine: <%=`ifconfig eth0 | grep inet`%> </i></h3>
+<h5 style="font-family: Arial; color: #fff;text-align:center">FQDN: <%= `hostname`.strip%></h5>
+<h5 style="font-family: Arial; color: #fff;text-align:center"><b> Total No of running Containers: <%= @netdetail.count%></b></h5>
 <div class= "container docker-container">
 	<% @netdetail.each do |nd| %>
 		<div class="col-md-4">

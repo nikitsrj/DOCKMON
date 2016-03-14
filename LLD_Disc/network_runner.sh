@@ -3,10 +3,12 @@
 # This script acts as a daemon process for network_containers.sh
 # Developed By: Nikit Swaraj DevOps Foradian Tech. 2016
 
+loop(){
 while true;
 do 
 	network_containers.sh
 
 	sleep 1;
 done
-
+}
+loop &

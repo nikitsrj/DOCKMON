@@ -20,5 +20,11 @@ class LiveContainerController < ApplicationController
   end
   end
 
+  def terminal_action
+   @netdetails = Netdetail.find_by(:Cont_name => params[:Cont_name])
+   `xterm -geometry 120*24+400+1500 -T DOCKMON -e docker stats nikit`
+  
+  end
+
 
 end

@@ -1,11 +1,6 @@
 #!/bin/bash
 #LLD Discovery Module() part of the Docker Monitoring System
-#       ************************************
-#       *  Developed By:  Nikit Swaraj     *
-#       *                 B.Tech C.S.E     *
-#       *                 LLD Discovery    *
-#       *                                  *
-#       ************************************
+#      ************************************
 
 function LLD()
 	{

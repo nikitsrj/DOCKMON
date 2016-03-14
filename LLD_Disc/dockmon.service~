@@ -1,5 +1,0 @@
-#!/bin/bash
-./creater_container.sh
-./network_runner_exec.sh
-./dbupdate.sh &
-

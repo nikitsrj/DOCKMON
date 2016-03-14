@@ -1,0 +1,63 @@
+#!/bin/bash
+#Licensed by GPL/GNU 2016 DOCKMON version 0.1
+#Developed By: Nikit Swaraj DevOps Foradian Tech 2016.
+#DOCKMON -This scripts start all the daemons and services of DOCKMON
+#chkconfig 85 89
+#Description : DOCKMON is a High End Docker Monitoring System
+#process-name: dockmon.start
+#Config Unit File : /lib/systemd/system/dockmon.service
+#Process Id: /srv/dockmon_app/DOCKMON/LLD_Disc/dockmon.pid
+
+
+# checking OS
+ os_name=`uname -a | gawk '{ print $1}'`
+
+	if [ $os_name == "Linux" ]
+	then
+
+# Running Network runner_exec
+	
+#	. /home/osboxes/Documents/DOCKMON/docker_monitoring/LLD_Disc/network_runner_exec.sh
+
+
+			network_container_daemon(){
+				while true;
+					do
+				        network_containers.sh
+
+				        sleep 1;
+					done	
+				}
+			network_container_daemon &		
+		ex_it=`echo $?`
+		if [ $ex_it == 0 ]
+		then
+
+
+
+
+
+# Running DBUpdater		
+			dbupdater(){
+
+		        while true;
+		                do
+		                mysql -u root -e "LOAD DATA INFILE 'nikit.txt' IGNORE INTO TABLE netdetails fields terminated by ',' lines terminated by '\n'" cntdet
+	                        sleep 10;
+        	                mysql -u root -e "truncate netdetails" cntdet
+        	                sleep 0.1;
+        		        done
+				}
+			dbupdater &
+
+
+
+#	. /home/osboxes/Documents/DOCKMON/docker_monitoring/LLD_Disc/dbupdate.sh &
+	
+	fi
+fi	
+
+sleep 2;
+
+pid=`pidof -x dockmon.start`
+echo $pid > /home/osboxes/Documents/DOCKMON/docker_monitoring/LLD_Disc/dockmon.pid && chmod 777 /home/osboxes/Documents/DOCKMON/docker_monitoring/LLD_Disc/dockmon.pid

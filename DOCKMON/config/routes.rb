@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'live_container/read_container_file'
   get 'live_container/documentation'
   get 'live_container/show_details'
-
+  get 'live_container/terminal_action'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

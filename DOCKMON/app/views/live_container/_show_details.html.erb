@@ -1,90 +1,104 @@
 <!-- Modal -->
-    <div class="modal-dialog" style="margin-top: 100px; width: 1000px;" >
-    
+    <div class="modal-dialog" style="margin-top: 100px; width: 70%;" >
+   
       <!--modal Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="background-color: #22B8EB; color: white;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title"><%= @netdetails.Cont_name %></h4>
-        </div>
-        <div class="modal-body" style="background-image: purple.jpg">
-          	<table>
-			<tbody>
 
+
+          
+
+           <!-- <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: #7FFF00;color: black; margin-left: 850px;">Dynamic Data</button> -->
+
+
+
+        </div>
+        <div class="modal-body">
+    		<table class="table-bordered" style="margin: 0 auto;">
+			<tbody>
 				<tr>
 					<th>Image ID</th>
-					<td><%= @netdetails.ImageID %><td>
+					<td><%= @netdetails.ImageID %></td>
 				</tr>
 				<tr>
 					<th>Image NO</th>
-					<td><%= @netdetails.ImageNO %><td>
+					<td><%= @netdetails.ImageNO %></td>
 				</tr>
 				<tr>
 					<th>State Process ID</th>
-					<td><%= @netdetails.State_Pid %><td>
+					<td><%= @netdetails.State_Pid %></td>
 				</tr>
 				<tr>
 					<th>Created On</th>
-					<td><%= @netdetails.DATE %><td>
+					<td><%= @netdetails.DATE %></td>
 				</tr>
 				<tr>
 					<th>Container Name</th>
-					<td><%= @netdetails.Cont_name %><td>
+					<td><%= @netdetails.Cont_name %></td>
 				</tr>		
 				<tr>
 					<th>Process Running</th>
-					<td><%= @netdetails.command %><td>
+					<td><%= @netdetails.command %></td>
 				</tr>
 				<tr>
 					<th>Operating System</th>
-					<td><%= @netdetails.os %><td>
+					<td><%= @netdetails.os %></td>
 				</tr>
 				<tr>
 					<th>Container Status</th>
-					<td><%= @netdetails.Status %><td>
+					<td><%= @netdetails.Status %></td>
 				</tr>
 				<tr>
 					<th>Memory</th>
-					<td><%= @netdetails.Memory %><td>
+					<td><%= @netdetails.Memory %></td>
 				</tr>
 				<tr>
 					<th>Swap Memory</th>
-					<td><%= @netdetails.Swap_mem %><td>
+					<td><%= @netdetails.Swap_mem %></td>
 				</tr>
 				<tr>
 					<th>Kernel Memory</th>
-					<td><%= @netdetails.Kernel_mem %><td>
+					<td><%= @netdetails.Kernel_mem %></td>
 				</tr>
 				<tr>
 					<th>CPU Cores</th>
-					<td><%= @netdetails.CPU_core %><td>
+					<td><%= @netdetails.CPU_core %></td>
 				</tr>
 				<tr>
 					<th>CPU Qoutas</th>
-					<td><%= @netdetails.CPU_Qouta %><td>
+					<td><%= @netdetails.CPU_Qouta %></td>
 				</tr>
 				<tr>
 					<th>IPv4</th>
-					<td><%= @netdetails.IPv4 %><td>
+					<td><%= @netdetails.IPv4 %></td>
 				</tr>
 				<tr>
 					<th>Gateway</th>
-					<td><%= @netdetails.Gateway %><td>
+					<td><%= @netdetails.Gateway %></td>
 				</tr>
 				<tr>
 					<th>Mac Address</th>
-					<td><%= @netdetails.MacADD %><td>
+					<td><%= @netdetails.MacADD %></td>
 				</tr>
 
 			</tbody>
 			</table>
         </div>
-        <div class="modal-footer" style="background-color: #22B8EB; ">
-          <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: white;color: red">Close</button>
+        <div class="modal-footer">
+        <div>
+          <%= link_to live_container_terminal_action_path(:Cont_name => @netdetails.Cont_name),:class => " btn btn-info btn-sm" do %>
+          Dynamic Data
+          <%end%>
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+         </div>
         </div>
       </div>
       
     </div>
-
-
-
+<style type="text/css">
+	th,td{
+		padding: 1px 20px;
+	}
+</style>
