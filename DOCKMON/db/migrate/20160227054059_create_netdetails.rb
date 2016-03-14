@@ -1,6 +1,6 @@
 class CreateNetdetails < ActiveRecord::Migration
   def change
-    create_table :netdetails id: false do |t|
+    create_table :netdetails, id: false do |t|
 
 	    t.string :ImageID
         t.string :ImageNO
