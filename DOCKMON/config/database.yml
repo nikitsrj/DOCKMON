@@ -7,3 +7,13 @@ development:
   username: root
   password: redhat
   host: localhost
+  
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: cntdet
+  pool: 5
+  username: root
+  password: redhat
+  host: localhost
