@@ -1,0 +1,13 @@
+[Unit]
+Description=The DOCKMON server service file //(c)2016 DOCKMON. Developed By: Nikit Swaraj|DevOps|Foradian Tech.
+After=syslog.target network.target docker.service mysql.service
+
+[Service]
+Type=forking
+ExecStart=/srv/dockmon_app/LLD_Disc/dockmon.start
+ExecReload=/bin/kill -s HUP $(pidof -x dockmon.start)
+ExecStop=/bin/kill -s QUIT $(pidof -x dockmon.start)
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
